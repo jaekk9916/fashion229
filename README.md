@@ -11,7 +11,9 @@
 ## Install
 
 ```sh
-yarn run dev
+1. cd client
+2. yarn dev
+3. follow instructions in terminal
 ```
 
 ## Author
