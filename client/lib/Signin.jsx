@@ -40,7 +40,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Signin(props) {
   const location = useLocation();
-  console.log(location.state)
   const classes = useStyles()
   const [values, setValues] = useState({
     email: '',

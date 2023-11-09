@@ -28,7 +28,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import unicornbikeImg from './../assets/images/unicornbikeImg.jpg';
+import fashion229_logo from './../assets/images/fashion229_logo.png';
 import { Link } from 'react-router-dom';
 
 
@@ -52,14 +52,14 @@ export default function Home() {
   return (
     <Card className={classes.card}>
 
-      <Typography variant="h6" className={classes.title}>Home Page</Typography>
+      <Typography variant="h6" className={classes.title}>Fashion229</Typography>
 
 
       <CardMedia className={classes.media}
-        image={unicornbikeImg} title="Unicorn Bicycle" />
+        image={fashion229_logo} title="Unicorn Bicycle" />
       <CardContent>
         <Typography variant="body2" component="p">
-          Welcome to the MERN Skeleton home page.
+          Welcome to the Fashion229 e-commerece.
         </Typography>
       </CardContent>
     </Card>
