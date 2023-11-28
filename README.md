@@ -18,7 +18,7 @@
 
 ## Author
 
-👤 **Jeremy Fernandez, Ziheng Huo, Hyeontak Ko, Younghun Mun, Jaekyeong Jang, Sanjay Shaju**
+👤 **Jeremy Fernandez, Younghun Mun, Jaekyeong Jang, Sanjay Shaju**
 
 
 ## Show your support
