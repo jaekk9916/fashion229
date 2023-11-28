@@ -1,77 +1,54 @@
-/*import React from 'react'
-import {Route, Routes} from 'react-router-dom'
-import Home from './core/Home' 
-import Users from './user/Users.jsx'
-import Signup from './user/Signup.jsx'
-import Signin from './auth/Signin.jsx'
-import Profile from './user/Profile.jsx'
-import Switch from 'react'
-import PrivateRoute from 'react'
-import EditProfile from 'react'
-import Menu from 'react'
-const MainRouter = () => {
-return ( <div> 
-<Routes>
-        <Route exact path="/" element={<Home />} /> 
-                <Route path="/users" component={Users} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/signin" component={Signin} />
-                <Route path="/user/:userId" component={Profile} />
-                <Menu/>
-     <Switch>
-
-<PrivateRoute path="/user/edit/:userId" component={EditProfile}/> 
-<Route path="/user/:userId" component={Profile}/>
-</Switch>
-        
-        
-</Routes>
-</div> 
-)
-}
-export default MainRouter*/
-
-
-
-
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-//import React from 'react'
-//import {Route, Routes} from 'react-router-dom'
+import React from 'react'
+import {Route, Switch} from 'react-router-dom'
 import Home from './core/Home'
-import Users from './user/Users.jsx'
-import Signup from './user/Signup.jsx'
-import Signin from './lib/Signin.jsx'
-import Profile from './user/Profile.jsx'
-import Switch from 'react'
-import PrivateRoute from './lib/PrivateRoute.jsx'
-import EditProfile from './user/EditProfile.jsx'
+import Users from './user/Users'
+import Signup from './user/Signup'
+import Signin from './auth/Signin'
+import EditProfile from './user/EditProfile'
+import Profile from './user/Profile'
+import PrivateRoute from './auth/PrivateRoute'
 import Menu from './core/Menu'
-function MainRouter() {
-  return (
-    <div>
-      <Menu />
+import NewShop from './shop/NewShop'
+import Shops from './shop/Shops'
+import MyShops from './shop/MyShops'
+import Shop from './shop/Shop'
+import EditShop from './shop/EditShop'
+import NewProduct from './product/NewProduct'
+import EditProduct from './product/EditProduct'
+import Product from './product/Product'
+import Cart from './cart/Cart'
+import StripeConnect from './user/StripeConnect'
+import ShopOrders from './order/ShopOrders'
+import Order from './order/Order'
 
+const MainRouter = () => {
+  return (<div>
+      <Menu/>
+      <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route path="/users" component={Users}/>
+        <Route path="/signup" component={Signup}/>
+        <Route path="/signin" component={Signin}/>
+        <PrivateRoute path="/user/edit/:userId" component={EditProfile}/>
+        <Route path="/user/:userId" component={Profile}/>
 
+        <Route path="/cart" component={Cart}/>
+        <Route path="/product/:productId" component={Product}/>
+        <Route path="/shops/all" component={Shops}/>
+        <Route path="/shops/:shopId" component={Shop}/>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route
-          path="/user/edit/:userId"
-          element={
-            <PrivateRoute>
-              <EditProfile />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/user/:userId" element={<Profile />} />
+        <Route path="/order/:orderId" component={Order}/>
+        <PrivateRoute path="/seller/orders/:shop/:shopId" component={ShopOrders}/>
 
-      </Routes>
-    </div>
-  );
+        <PrivateRoute path="/seller/shops" component={MyShops}/>
+        <PrivateRoute path="/seller/shop/new" component={NewShop}/>
+        <PrivateRoute path="/seller/shop/edit/:shopId" component={EditShop}/>
+        <PrivateRoute path="/seller/:shopId/products/new" component={NewProduct}/>
+        <PrivateRoute path="/seller/:shopId/:productId/edit" component={EditProduct}/>
+
+        <Route path="/seller/stripe/connect" component={StripeConnect}/>
+      </Switch>
+    </div>)
 }
 
-export default MainRouter;
+export default MainRouter
