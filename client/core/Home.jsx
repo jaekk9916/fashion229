@@ -31,7 +31,7 @@ export default function Home() {
         image={unicornbikeImg} title="Unicorn Bicycle" />
       <CardContent>
         <Typography variant="body2" component="p">
-          Welcome to the MERN Skeleton home page.
+          Welcome to the Fashion229 Home Page
         </Typography>
       </CardContent>
     </Card>
