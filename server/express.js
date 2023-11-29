@@ -9,6 +9,8 @@ import authRoutes from './routes/auth.routes.js'
 import shopRoutes from './routes/shop.routes.js'
 import productRoutes from './routes/product.routes.js'
 import orderRoutes from './routes/order.routes.js'
+import path from 'path'
+
 
 const app = express()
 const CURRENT_WORKING_DIR = process.cwd()
@@ -34,5 +36,6 @@ app.use((err, req, res, next) => {
         console.log(err)
     }
 })
+app.use(express.static(path.join(CURRENT_WORKING_DIR, "dist/app")))
 export default app
 
