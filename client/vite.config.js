@@ -4,7 +4,7 @@ dotenv.config();
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const PORT = process.env.PORT || 5173;
+const { PORT = 3000 } = process.env;
 
 export default defineConfig({
   plugins: [react({
@@ -12,8 +12,6 @@ export default defineConfig({
   }
   )],
   server: {
-    host: '0.0.0.0', // Bind to all network interfaces
-    port: PORT,
     proxy: {
       '/api': {
         target: `http://localhost:${PORT}`,
