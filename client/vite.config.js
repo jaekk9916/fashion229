@@ -8,6 +8,7 @@ import react from "@vitejs/plugin-react";
 const PORT = process.env.PORT || 5173;
 
 export default defineConfig({
+  base: './',
   plugins: [react({
     jsxRuntime: 'classic'
   }
