@@ -4,17 +4,20 @@ dotenv.config();
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const { PORT = 3000 } = process.env;
+// Use Render's PORT environment variable, default to a port for local development
+const PORT = process.env.PORT || 5173;
 
 export default defineConfig({
   plugins: [react({
-    jsxRuntime: 'classic' // Add this line
+    jsxRuntime: 'classic'
   }
   )],
   server: {
+    host: '0.0.0.0', // Bind to all network interfaces
+    port: PORT, // Use the PORT environment variable provided by Render
     proxy: {
       '/api': {
-        target: `http://localhost:${PORT}`,
+        target: `http://localhost:3000`,
         changeOrigin: true,
       },
     },
