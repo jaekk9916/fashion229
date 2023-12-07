@@ -69,6 +69,11 @@ export default function Signup() {
       }
     })
   }   
+  const handleClose = (event, reason) => {
+    if (reason !== 'backdropClick') {
+      setValues({ ...values, open: false });
+    }
+  }
     return (<div>
       <Card className={classes.card}>
         <CardContent>
@@ -88,7 +93,7 @@ export default function Signup() {
           <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>Submit</Button>
         </CardActions>
       </Card>
-      <Dialog open={values.open} disableBackdropClick={true}>
+       <Dialog open={values.open} onClose={handleClose}>
         <DialogTitle>New Account</DialogTitle>
         <DialogContent>
           <DialogContentText>

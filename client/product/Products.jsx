@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {makeStyles} from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AddToCart from './../cart/AddToCart'
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     padding: '16px 0 10px'
   },
   title: {
-    padding:`${theme.spacing(3)}px ${theme.spacing(2.5)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(3)}px ${theme.spacing(2.5)}px ${theme.spacing(2)}px`,
     color: theme.palette.openTitle,
     width: '100%'
   },
@@ -43,34 +43,34 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'left'
   },
   tileTitle: {
-    fontSize:'1.1em',
-    marginBottom:'5px',
-    color:'rgb(189, 222, 219)',
-    display:'block'
+    fontSize: '1.1em',
+    marginBottom: '5px',
+    color: 'rgb(189, 222, 219)',
+    display: 'block'
   }
 }))
 
-export default function Products(props){
+export default function Products(props) {
   const classes = useStyles()
-    return (
-      <div className={classes.root}>
+  return (
+    <div className={classes.root}>
       {props.products.length > 0 ?
         (<div className={classes.container}>
           <GridList cellHeight={200} className={classes.gridList} cols={3}>
-          {props.products.map((product, i) => (
-            <GridListTile key={i} className={classes.tile}>
-              <Link to={"/product/"+product._id}><img className={classes.image} src={'/api/product/image/'+product._id} alt={product.name} /></Link>
-              <GridListTileBar className={classes.tileBar}
-                title={<Link to={"/product/"+product._id} className={classes.tileTitle}>{product.name}</Link>}
-                subtitle={<span>$ {product.price}</span>}
-                actionIcon={
-                  <AddToCart item={product}/>
-                }
-              />
-            </GridListTile>
-          ))}
-        </GridList></div>) : props.searched && (<Typography variant="subheading" component="h4" className={classes.title}>No products found! :(</Typography>)}
-      </div>)
+            {props.products.map((product, i) => (
+              <GridListTile key={i} className={classes.tile}>
+                <Link to={"/product/" + product._id}><img className={classes.image} src={'/api/product/image/' + product._id} alt={product.name} /></Link>
+                <GridListTileBar className={classes.tileBar}
+                  title={<Link to={"/product/" + product._id} className={classes.tileTitle}>{product.name}</Link>}
+                  subtitle={<span>$ {product.price}</span>}
+                  actionIcon={
+                    <AddToCart item={product} />
+                  }
+                />
+              </GridListTile>
+            ))}
+          </GridList></div>) : props.searched && (<Typography variant="subheading" component="h4" className={classes.title}>No products found! :(</Typography>)}
+    </div>)
 }
 Products.propTypes = {
   products: PropTypes.array.isRequired,

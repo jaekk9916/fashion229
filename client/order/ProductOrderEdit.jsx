@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {makeStyles} from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider'
 import auth from './../auth/auth-helper'
-import {getStatusValues, update, cancelProduct, processCharge} from './api-order.js'
+import { getStatusValues, update, cancelProduct, processCharge } from './api-order.js'
 
 const useStyles = makeStyles(theme => ({
   nested: {
@@ -40,12 +40,12 @@ const useStyles = makeStyles(theme => ({
     padding: '5px'
   }
 }))
-export default function ProductOrderEdit (props){
+export default function ProductOrderEdit(props) {
   const classes = useStyles()
   const [values, setValues] = useState({
-      open: 0,
-      statusValues: [],
-      error: ''
+    open: 0,
+    statusValues: [],
+    error: ''
   })
   const jwt = auth.isAuthenticated()
   useEffect(() => {
@@ -53,12 +53,12 @@ export default function ProductOrderEdit (props){
     const signal = abortController.signal
     getStatusValues(signal).then((data) => {
       if (data.error) {
-        setValues({...values, error: "Could not get status"})
+        setValues({ ...values, error: "Could not get status" })
       } else {
-        setValues({...values, statusValues: data, error: ''})
+        setValues({ ...values, statusValues: data, error: '' })
       }
     })
-    return function cleanup(){
+    return function cleanup() {
       abortController.abort()
     }
   }, [])
@@ -70,15 +70,15 @@ export default function ProductOrderEdit (props){
 
     if (event.target.value == "Cancelled") {
       cancelProduct({
-          shopId: props.shopId,
-          productId: product.product._id
-        }, {
-          t: jwt.token
-        }, {
-          cartItemId: product._id,
-          status: event.target.value,
-          quantity: product.quantity
-        })
+        shopId: props.shopId,
+        productId: product.product._id
+      }, {
+        t: jwt.token
+      }, {
+        cartItemId: product._id,
+        status: event.target.value,
+        quantity: product.quantity
+      })
         .then((data) => {
           if (data.error) {
             setValues({
@@ -95,16 +95,16 @@ export default function ProductOrderEdit (props){
         })
     } else if (event.target.value == "Processing") {
       processCharge({
-          userId: jwt.user._id,
-          shopId: props.shopId,
-          orderId: order._id
-        }, {
-          t: jwt.token
-        }, {
-          cartItemId: product._id,
-          status: event.target.value,
-          amount: (product.quantity * product.product.price)
-        })
+        userId: jwt.user._id,
+        shopId: props.shopId,
+        orderId: order._id
+      }, {
+        t: jwt.token
+      }, {
+        cartItemId: product._id,
+        status: event.target.value,
+        amount: (product.quantity * product.product.price)
+      })
         .then((data) => {
           if (data.error) {
             setValues({
@@ -121,13 +121,13 @@ export default function ProductOrderEdit (props){
         })
     } else {
       update({
-          shopId: props.shopId
-        }, {
-          t: jwt.token
-        }, {
-          cartItemId: product._id,
-          status: event.target.value
-        })
+        shopId: props.shopId
+      }, {
+        t: jwt.token
+      }, {
+        cartItemId: product._id,
+        status: event.target.value
+      })
         .then((data) => {
           if (data.error) {
             setValues({
@@ -144,49 +144,50 @@ export default function ProductOrderEdit (props){
         })
     }
   }
-    return (
+  return (
     <div>
       <Typography component="span" color="error" className={classes.statusMessage}>
         {values.error}
       </Typography>
-      <List disablePadding style={{backgroundColor:'#f8f8f8'}}>
+      <List disablePadding style={{ backgroundColor: '#f8f8f8' }}>
         {props.order.products.map((item, index) => {
           return <span key={index}>
-                  { item.shop == props.shopId &&
-                    <ListItem button className={classes.nested}>
-                      <ListItemText
-                        primary={<div>
-                                    <img className={classes.listImg} src={'/api/product/image/'+item.product._id}/>
-                                    <div className={classes.listDetails}>
-                                      {item.product.name}
-                                      <p className={classes.listQty}>{"Quantity: "+item.quantity}</p>
-                                    </div>
-                                  </div>}/>
-                      <TextField
-                        id="select-status"
-                        select
-                        label="Update Status"
-                        className={classes.textField}
-                        value={item.status}
-                        onChange={handleStatusChange(index)}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {values.statusValues.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </ListItem>
-                  }
-                  <Divider style={{margin: 'auto', width: "80%"}}/>
-                </span>})
-              }
+            {item.shop == props.shopId &&
+              <ListItem button className={classes.nested}>
+                <ListItemText
+                  primary={<div>
+                    <img className={classes.listImg} src={'/api/product/image/' + item.product._id} />
+                    <div className={classes.listDetails}>
+                      {item.product.name}
+                      <p className={classes.listQty}>{"Quantity: " + item.quantity}</p>
+                    </div>
+                  </div>} />
+                <TextField
+                  id="select-status"
+                  select
+                  label="Update Status"
+                  className={classes.textField}
+                  value={item.status}
+                  onChange={handleStatusChange(index)}
+                  SelectProps={{
+                    MenuProps: {
+                      className: classes.menu,
+                    },
+                  }}
+                  margin="normal"
+                >
+                  {values.statusValues.map(option => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </ListItem>
+            }
+            <Divider style={{ margin: 'auto', width: "80%" }} />
+          </span>
+        })
+        }
       </List>
     </div>)
 }

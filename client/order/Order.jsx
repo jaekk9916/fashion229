@@ -1,13 +1,13 @@
-import React, {useState, useEffect}  from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
-import {makeStyles} from '@material-ui/core/styles'
-import {read} from './api-order.js'
-import {Link} from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+import { read } from './api-order.js'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '0.95rem',
     display: 'inline'
   },
-  thanks:{
+  thanks: {
     color: 'rgb(136, 183, 107)',
     fontSize: '0.9rem',
     fontStyle: 'italic'
@@ -96,9 +96,9 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function Order({match}) {
+export default function Order({ match }) {
   const classes = useStyles()
-  const [order, setOrder] = useState({products:[], delivery_address:{}})
+  const [order, setOrder] = useState({ products: [], delivery_address: {} })
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -112,72 +112,73 @@ export default function Order({match}) {
         setOrder(data)
       }
     })
-    return function cleanup(){
+    return function cleanup() {
       abortController.abort()
     }
   }, [])
 
   const getTotal = () => {
     return order.products.reduce((a, b) => {
-       const quantity = b.status == "Cancelled" ? 0 : b.quantity
-        return a + (quantity*b.product.price)
+      const quantity = b.status == "Cancelled" ? 0 : b.quantity
+      return a + (quantity * b.product.price)
     }, 0)
   }
 
-    return (
-      <Card className={classes.card}>
-        <Typography type="headline" component="h2" className={classes.title}>
-            Order Details
-        </Typography>
-        <Typography type="subheading" component="h2" className={classes.subheading}>
-            Order Code: <strong>{order._id}</strong> <br/> Placed on {(new Date(order.created)).toDateString()}
-        </Typography><br/>
-        <Grid container spacing={4}>
-            <Grid item xs={7} sm={7}>
-                <Card className={classes.innerCardItems}>
-                  {order.products.map((item, i) => {
-                    return  <span key={i}>
-                      <Card className={classes.cart} >
-                        <CardMedia
-                          className={classes.cover}
-                          image={'/api/product/image/'+item.product._id}
-                          title={item.product.name}
-                        />
-                        <div className={classes.details}>
-                          <CardContent className={classes.content}>
-                            <Link to={'/product/'+item.product._id}><Typography type="title" component="h3" className={classes.productTitle} color="primary">{item.product.name}</Typography></Link>
-                            <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">$ {item.product.price} x {item.quantity}</Typography>
-                            <span className={classes.itemTotal}>${item.product.price * item.quantity}</span>
-                            <span className={classes.itemShop}>Shop: {item.shop.name}</span>
-                            <Typography type="subheading" component="h3" color={item.status == "Cancelled" ? "error":"secondary"}>Status: {item.status}</Typography>
-                          </CardContent>
-                        </div>
-                      </Card>
-                      <Divider/>
-                    </span>})
-                  }
-                  <div className={classes.checkout}>
-                    <span className={classes.total}>Total: ${getTotal()}</span>
+  return (
+    <Card className={classes.card}>
+      <Typography type="headline" component="h2" className={classes.title}>
+        Order Details
+      </Typography>
+      <Typography type="subheading" component="h2" className={classes.subheading}>
+        Order Code: <strong>{order._id}</strong> <br /> Placed on {(new Date(order.created)).toDateString()}
+      </Typography><br />
+      <ImageList container spacing={4}>
+        <Grid item xs={7} sm={7}>
+          <Card className={classes.innerCardItems}>
+            {order.products.map((item, i) => {
+              return <span key={i}>
+                <Card className={classes.cart} >
+                  <CardMedia
+                    className={classes.cover}
+                    image={'/api/product/image/' + item.product._id}
+                    title={item.product.name}
+                  />
+                  <div className={classes.details}>
+                    <CardContent className={classes.content}>
+                      <Link to={'/product/' + item.product._id}><Typography type="title" component="h3" className={classes.productTitle} color="primary">{item.product.name}</Typography></Link>
+                      <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">$ {item.product.price} x {item.quantity}</Typography>
+                      <span className={classes.itemTotal}>${item.product.price * item.quantity}</span>
+                      <span className={classes.itemShop}>Shop: {item.shop.name}</span>
+                      <Typography type="subheading" component="h3" color={item.status == "Cancelled" ? "error" : "secondary"}>Status: {item.status}</Typography>
+                    </CardContent>
                   </div>
                 </Card>
-            </Grid>
-            <Grid item xs={5} sm={5}>
-              <Card className={classes.innerCard}>
-                <Typography type="subheading" component="h2" className={classes.productTitle} color="primary">
-                 Deliver to:
-                </Typography>
-                <Typography type="subheading" component="h3" className={classes.info} color="primary"><strong>{order.customer_name}</strong></Typography><br/>
-                <Typography type="subheading" component="h3" className={classes.info} color="primary">{order.customer_email}</Typography><br/>
-                <br/>
-                <Divider/>
-                <br/>
-                <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">{order.delivery_address.street}</Typography>
-                <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">{order.delivery_address.city}, {order.delivery_address.state} {order.delivery_address.zipcode}</Typography>
-                <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">{order.delivery_address.country}</Typography><br/>
-                <Typography type="subheading" component="h3" className={classes.thanks} color="primary">Thank you for shopping with us! <br/>You can track the status of your purchased items on this page.</Typography>
-              </Card>
-            </Grid>
+                <Divider />
+              </span>
+            })
+            }
+            <div className={classes.checkout}>
+              <span className={classes.total}>Total: ${getTotal()}</span>
+            </div>
+          </Card>
         </Grid>
-      </Card>
-    )
+        <Grid item xs={5} sm={5}>
+          <Card className={classes.innerCard}>
+            <Typography type="subheading" component="h2" className={classes.productTitle} color="primary">
+              Deliver to:
+            </Typography>
+            <Typography type="subheading" component="h3" className={classes.info} color="primary"><strong>{order.customer_name}</strong></Typography><br />
+            <Typography type="subheading" component="h3" className={classes.info} color="primary">{order.customer_email}</Typography><br />
+            <br />
+            <Divider />
+            <br />
+            <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">{order.delivery_address.street}</Typography>
+            <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">{order.delivery_address.city}, {order.delivery_address.state} {order.delivery_address.zipcode}</Typography>
+            <Typography type="subheading" component="h3" className={classes.itemShop} color="primary">{order.delivery_address.country}</Typography><br />
+            <Typography type="subheading" component="h3" className={classes.thanks} color="primary">Thank you for shopping with us! <br />You can track the status of your purchased items on this page.</Typography>
+          </Card>
+        </Grid>
+      </ImageList>
+    </Card>
+  )
 }

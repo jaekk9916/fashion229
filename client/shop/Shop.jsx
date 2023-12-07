@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import Grid from '@material-ui/core/Grid'
-import {read} from './api-shop.js'
+import { ImageList, ImageListItem } from '@material-ui/core';
+import { read } from './api-shop.js'
 import Products from './../product/Products'
-import {listByShop} from './../product/api-product.js'
+import { listByShop } from './../product/api-product.js'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,14 +34,14 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto'
   },
   productTitle: {
-    padding:`${theme.spacing(3)}px ${theme.spacing(2.5)}px ${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(3)}px ${theme.spacing(2.5)}px ${theme.spacing(1)}px ${theme.spacing(2)}px`,
     color: theme.palette.openTitle,
     width: '100%',
     fontSize: '1.2em'
   }
 }))
 
-export default function Shop({match}) {
+export default function Shop({ match }) {
   const classes = useStyles()
   const [shop, setShop] = useState('')
   const [products, setProducts] = useState([])
@@ -52,7 +53,7 @@ export default function Shop({match}) {
 
     listByShop({
       shopId: match.params.shopId
-    }, signal).then((data)=>{
+    }, signal).then((data) => {
       if (data.error) {
         setError(data.error)
       } else {
@@ -69,7 +70,7 @@ export default function Shop({match}) {
       }
     })
 
-    return function cleanup(){
+    return function cleanup() {
       abortController.abort()
     }
 
@@ -80,7 +81,7 @@ export default function Shop({match}) {
 
     listByShop({
       shopId: match.params.shopId
-    }, signal).then((data)=>{
+    }, signal).then((data) => {
       if (data.error) {
         setError(data.error)
       } else {
@@ -88,37 +89,39 @@ export default function Shop({match}) {
       }
     })
 
-    return function cleanup(){
+    return function cleanup() {
       abortController.abort()
     }
 
   }, [match.params.shopId])
 
-    const logoUrl = shop._id
-          ? `/api/shops/logo/${shop._id}?${new Date().getTime()}`
-          : '/api/shops/defaultphoto'
-    return (<div className={classes.root}>
-      <Grid container spacing={8}>
-        <Grid item xs={4} sm={4}>
-          <Card className={classes.card}>
-            <CardContent>
-              <Typography type="headline" component="h2" className={classes.title}>
-                {shop.name}
-              </Typography>
-              <br/>
-              <Avatar src={logoUrl} className={classes.bigAvatar}/><br/>
-                <Typography type="subheading" component="h2" className={classes.subheading}>
-                  {shop.description}
-                </Typography><br/>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={8} sm={8}>
-          <Card>
-            <Typography type="title" component="h2" className={classes.productTitle}>Products</Typography>
-            <Products products={products} searched={false}/>
-          </Card>
-        </Grid>
+  const logoUrl = shop._id
+    ? `/api/shops/logo/${shop._id}?${new Date().getTime()}`
+    : '/api/shops/defaultphoto'
+  return ( 
+  <div className={classes.root}>
+    <Grid container spacing={8}>
+      <Grid item xs={4} sm={4}>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography variant="h6" className={classes.title}>
+              {shop.name}
+            </Typography>
+            <Avatar src={logoUrl} className={classes.bigAvatar} />
+            <Typography variant="subtitle1" className={classes.subheading}>
+              {shop.description}
+            </Typography>
+          </CardContent>
+        </Card>
       </Grid>
-    </div>)
+      <Grid item xs={8} sm={8}>
+        <Card>
+          <Typography variant="h6" className={classes.productTitle}>
+            Products
+          </Typography>
+          <Products products={products} searched={false} />
+        </Card>
+      </Grid>
+    </Grid>
+  </div>);
 }

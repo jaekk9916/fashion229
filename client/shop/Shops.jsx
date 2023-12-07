@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import List from '@material-ui/core/List'
+// import List from '@material-ui/core/List'
+import ImageList from '@material-ui/core/ImageList';
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
@@ -11,20 +12,24 @@ import {list} from './api-shop.js'
 import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
-  root: theme.mixins.gutters({
+  root: {
     maxWidth: 600,
     margin: 'auto',
     padding: theme.spacing(3),
     marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(3)
-  }),
+    marginBottom: theme.spacing(3),
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+    },
+  },
   title: {
     margin: `${theme.spacing(3)}px 0 ${theme.spacing(2)}px`,
     color: theme.palette.protectedTitle,
     textAlign: 'center',
     fontSize: '1.2em'
   },
-  avatar:{
+  avatar: {
     width: 100,
     height: 100
   },
@@ -38,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   details: {
     padding: '24px'
   }
-}))
+}));
 export default function Shops(){
   const classes = useStyles()
   const [shops, setShops] = useState([])
@@ -65,7 +70,7 @@ export default function Shops(){
         <Typography type="title" className={classes.title}>
           All Shops
         </Typography>
-        <List dense>
+        <ImageList>
           {shops.map((shop, i) => {
             return <Link to={"/shops/"+shop._id} key={i}>
               <Divider/>
@@ -84,7 +89,7 @@ export default function Shops(){
               </ListItem>
               <Divider/>
             </Link>})}
-        </List>
+        </ImageList>
       </Paper>
     </div>)
 }

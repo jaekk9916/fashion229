@@ -7,7 +7,7 @@ import theme from '../theme';
 
 const App = () => {
   React.useEffect(() => {
-    
+
     // Clean up server-side injected JSS styles
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
@@ -25,7 +25,7 @@ const App = () => {
 };
 
 // Wrap the App component with the hot module loader
- //export default hot(module)(App);
+//export default hot(module)(App);
 export default App;
 
 

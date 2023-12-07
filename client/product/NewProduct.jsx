@@ -107,7 +107,7 @@ export default function NewProduct({match}) {
             id="multiline-flexible"
             label="Description"
             multiline
-            rows="2"
+            minrows="2"
             value={values.description}
             onChange={handleChange('description')}
             className={classes.textField}
